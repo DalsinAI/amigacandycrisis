@@ -1,0 +1,9 @@
+/build*
+/cache
+/cmake-build*
+/dist
+/extern
+
+/SDL*
+
+.DS_Store
