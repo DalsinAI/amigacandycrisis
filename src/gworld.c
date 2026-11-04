@@ -7,10 +7,12 @@
 #include "blitter.h"
 #include "graphics.h"
 
+#ifndef __amigaos__
 #define STBI_ONLY_JPEG
 #define STBI_ONLY_PNG
 #define STB_IMAGE_IMPLEMENTATION
 #include "support/stb_image.h"
+#endif
 
 SDL_Surface* blobSurface;
 SDL_Surface* maskSurface;
@@ -194,6 +196,18 @@ SDL_Surface* LoadPICTAsSurface( int pictID, int depth )
         return NULL;
     }
 
+#ifdef __amigaos__
+    // 8-bit PNGs made by amiga/tools/convert_gfx.py, read by acsdl12's
+    // IMG_Load and turned into a 32-bit surface of our own (sdlu_amiga.c)
+    (void) rect;
+    (void) pixels;
+    surface = CC_LoadPicture(filename);
+    if( surface == NULL )
+    {
+        Error(filename);
+        return NULL;
+    }
+#else
     pixels = stbi_load(filename, &rect.w, &rect.h, NULL, 3);
 
     surface = SDLU_InitSurface(&rect, 32);
@@ -215,6 +229,8 @@ SDL_Surface* LoadPICTAsSurface( int pictID, int depth )
 
     free(pixels);
     pixels = NULL;
+
+#endif
 
 	if( depth != 0 )
 	{

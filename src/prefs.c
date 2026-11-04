@@ -80,6 +80,24 @@ void LoadPrefs()
 	}
 
 	SDL_RWclose(stream);
+
+#ifdef __amigaos__
+	// The file is written and read in this machine's byte order (a PC's
+	// file has every length the wrong way round, so nothing in it is
+	// taken). Even so, what is read is not trusted further than this:
+	// keys index the key state array, names are printed as strings.
+	for (int p = 0; p < 2; p++)
+		for (int k = 0; k < 4; k++)
+			if (playerKeys[p][k] <= SDLK_UNKNOWN || playerKeys[p][k] >= SDLK_LAST)
+				SDL_memcpy(playerKeys, defaultPlayerKeys, sizeof(playerKeys));
+	for (int i = 0; i < arrsize(scores); i++)
+		scores[i].name[kNameLength-1] = '\0';
+	best.name[kNameLength-1] = '\0';
+	for (int x = 0; x < kGridAcross; x++)
+		for (int y = 0; y < kGridDown; y++)
+			if (best.grid[x][y] < kEmpty || best.grid[x][y] > kGray)
+				best.grid[x][y] = kEmpty;
+#endif
 }
 
 void SavePrefs()
