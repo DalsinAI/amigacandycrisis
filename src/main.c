@@ -550,6 +550,29 @@ void CenterRectOnScreen( MRect *rect, double locationX, double locationY )
 	OffsetMRect( rect, dest.h, dest.v );
 }
 
+#ifdef __amigaos__
+// acsdl12's 640x480 screen is opened by SDLU_Init (amiga/sdlu_amiga.c);
+// the game draws on a 32-bit front surface of our own, which SDLU_Present
+// puts on it. There is no window to size or make fullscreen.
+void ReserveMonitor( void )
+{
+    g_frontSurface = SDL_CreateRGBSurface(0, 640, 480, 32,
+                                          RED_MASK, GREEN_MASK, BLUE_MASK, 0);
+    if (!g_frontSurface)
+        Error("ReserveMonitor: not enough memory");
+    SDL_FillRect(g_frontSurface, NULL, 0);
+}
+
+void ReleaseMonitor( void )
+{
+}
+
+void SetFullscreen( MBoolean fullscreenMode )
+{
+    (void) fullscreenMode;
+}
+
+#else
 void ReserveMonitor( void )
 {
     SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
@@ -591,6 +614,8 @@ void SetFullscreen( MBoolean fullscreenMode )
 {
     SDL_SetWindowFullscreen(g_window, fullscreenMode? SDL_WINDOW_FULLSCREEN_DESKTOP: 0);
 }
+
+#endif
 
 int Warp( void )
 {
@@ -644,6 +669,12 @@ void Initialize(void)
 	}
 
 	SDL_snprintf(candyCrisisResources, sizeof(candyCrisisResources), "%s/Resources/", pathbuf);
+#elif defined(__amigaos__)
+	SDL_snprintf(candyCrisisResources, sizeof(candyCrisisResources), "PROGDIR:CandyCrisisResources/");
+	if (!CheckDataPath())
+	{
+		Error("Couldn't find the CandyCrisisResources drawer beside the program.");
+	}
 #else
 	char* basePath = SDL_GetBasePath();
 

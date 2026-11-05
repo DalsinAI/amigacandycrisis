@@ -1,0 +1,28 @@
+{
+  "about": "The Workbench icons of the Candy Crisis drawer: python3 AMICRADLE/scripts/port_icons.py amiga/icons/icons.json --out amiga/icons (DalsinAI/amicradle). The art is the game's own icon (packaging/candycrisis.png). CandyCrisis-drawer.info is the drawer's own icon, CandyCrisis.info beside the drawer; it has its own name here so as not to meet the program's CandyCrisis.info. CandyCrisisResources.info is the data drawer's.",
+  "drawer": {
+    "name": "CandyCrisis",
+    "file": "CandyCrisis-drawer.info"
+  },
+  "badge": "art/candycrisis.png",
+  "icons": [
+    {
+      "file": "CandyCrisis.info",
+      "kind": "tool",
+      "stack": 131072
+    },
+    {
+      "file": "ReadMe.info",
+      "kind": "readme"
+    },
+    {
+      "file": "LICENSE.info",
+      "kind": "readme"
+    },
+    {
+      "file": "CandyCrisisResources.info",
+      "kind": "drawer",
+      "type": "drawer"
+    }
+  ]
+}
