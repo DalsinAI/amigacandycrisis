@@ -2,7 +2,9 @@
 #
 #   make -f amiga/Makefile.amigaos STOVE=/path/to/os32-gcc16/prefix \
 #        NDK=/path/to/gfopensdk/OpenNDK/Include_H \
-#        ACSDL=/path/to/amicradle-guest/gameports/acsdl12
+#        ACSDL=/path/to/amicradle-guest/gameports/acsdl12 \
+#        ACSDLLIB=/path/to/acsdl12/build ACGAME=/path/to/acgame \
+#        ACGAMELIB=/path/to/acgame/build-amiga
 #
 # STOVE is GFOpenAmigaGCC 16.2.0-open4 or later. ACSDL is acsdl12, built with
 # its own Makefile.amigaos (its library holds zlib's inflate, so ZLIB is only
@@ -11,13 +13,18 @@
 # replaced by amiga/sdlu_amiga.c and amiga/sound_amiga.c, and src/support/
 # cmixer.c and stb_image.h are not used. The pictures are the 8-bit PNGs in
 # amiga/gfx (made from CandyCrisisResources by amiga/tools/convert_gfx.py).
+# acsdl12 is built with ACG= into ACSDLLIB, without its own copy of ACGame:
+# the game gets ACGame from acgame.library, through ACGAMELIB's libacgame.a
+# (DalsinAI/acgame's stubs). package/acgame-deps.sh builds both.
 # Output: build/amigaos/CandyCrisis/ with the program, CandyCrisisResources
 # beside it, and the icons.
 
 STOVE   ?= $(HOME)/CradleLab/toolchain/openamigagcc-16.2.0-open4-x86_64-linux
 NDK     ?= $(HOME)/CradleLab/gfopensdk/OpenNDK/Include_H
 ACSDL   ?= $(HOME)/CradleLab/guest-sdl/gameports/acsdl12
+ACSDLLIB ?= $(ACSDL)/build/amigaos
 ACGAME  ?= $(ACSDL)/../acgame
+ACGAMELIB ?= $(ACGAME)/build-amiga
 ZLIB    ?= $(HOME)/CradleLab/zlib-1.3.1
 CC      = $(STOVE)/bin/m68k-amigaos-gcc
 CPU     ?= -m68040 -m68881
@@ -47,7 +54,7 @@ ICONS   = amiga/icons/CandyCrisis-drawer.info amiga/icons/CandyCrisis.info \
 all: $(OUT)/CandyCrisis
 
 $(OUT)/CandyCrisis: $(OBJS) $(GFX) $(SOUND) $(ICONS) AMIGA_PORT.md | $(OUT)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(ACSDL)/build/amigaos/libacsdl12.a -lm
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(ACSDLLIB)/libacsdl12.a $(ACGAMELIB)/libacgame.a -lm
 	rm -rf $(RES)
 	mkdir -p $(RES)
 	cp $(GFX) $(SOUND) $(RES)/

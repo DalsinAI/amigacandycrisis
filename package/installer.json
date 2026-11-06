@@ -1,0 +1,15 @@
+{
+  "name": "Candy Crisis",
+  "version": "3.0.1-amiga2",
+  "drawer": "CandyCrisis",
+  "program": "CandyCrisis",
+  "cpu": "68040",
+  "fpu": true,
+  "space": 14000000,
+  "modules": [],
+  "keep": [
+    "CandyCrisisPrefs.bin"
+  ],
+  "parent": "Work:Games",
+  "badge": "../amiga/icons/art/candycrisis.png"
+}

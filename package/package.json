@@ -1,0 +1,62 @@
+{
+  "drawer": "CandyCrisis",
+  "drawer_icon": "amiga/icons/CandyCrisis-drawer.info",
+  "archive": "candycrisis-{version}-68040",
+  "members": [
+    {
+      "name": "CandyCrisis",
+      "build": "CandyCrisis",
+      "check": "executable_sha256"
+    },
+    {
+      "name": "Libs/acgame.library",
+      "build": "acgame.library",
+      "check": "acgame_library_sha256"
+    },
+    {
+      "name": "",
+      "tar": "drawer.tar"
+    }
+  ],
+  "aminet": [
+    [
+      "Short",
+      "Candy Crisis, falling-blob puzzle game, 68040+FPU"
+    ],
+    [
+      "Author",
+      "John Stiles; source port: Iliyas Jorio; Amiga port: AmiCradle Team"
+    ],
+    [
+      "Uploader",
+      "AmiCradle Team"
+    ],
+    [
+      "Type",
+      "game/think"
+    ],
+    [
+      "Version",
+      "{version}"
+    ],
+    [
+      "Requires",
+      "AmigaOS 3.x, 68040/68060 with FPU, AGA or RTG, AHI"
+    ],
+    [
+      "Architecture",
+      "m68k-amigaos >= 3.0"
+    ]
+  ],
+  "root": [
+    {
+      "name": "Install-CandyCrisis",
+      "repo": "package/installer/Install-CandyCrisis",
+      "installer": true
+    },
+    {
+      "name": "Install-CandyCrisis.info",
+      "repo": "package/installer/Install-CandyCrisis.info"
+    }
+  ]
+}
