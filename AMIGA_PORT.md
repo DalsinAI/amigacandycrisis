@@ -6,6 +6,16 @@ a 68040 with FPU, on acsdl12, our SDL 1.2 for game ports (ACGame's screen,
 AHI sound). Upstream: https://github.com/jorio/CandyCrisis at 1fcb507
 (3.0.1, the last SDL 2 release; later commits move it to SDL 3).
 
+Installing
+----------
+
+Unpack the archive anywhere (on AmiCradle: SYS:Utilities/OpenCompress x
+candycrisis-...lha RAM:), then double-click Install-CandyCrisis beside the
+CandyCrisis drawer: it asks where to put the game (Work:Games by default)
+and keeps the prefs and high scores of an earlier install. The drawer's
+Libs holds the acgame.library the game was built against, and the game
+opens that copy first.
+
 Running
 -------
 
@@ -49,7 +59,12 @@ What is different on the Amiga
 Building
 --------
 
-    make -f amiga/Makefile.amigaos STOVE=... NDK=... ACSDL=...
+    make -f amiga/Makefile.amigaos STOVE=... NDK=... ACSDL=... ACSDLLIB=... \
+         ACGAME=... ACGAMELIB=...
+
+or, for the release archive with its installer, package/build-amiga.sh
+(STOVE and OUT set; it fetches and builds acgame, acsdl12 and zlib at
+pinned commits).
 
 Output: build/amigaos/CandyCrisis/ (and its CandyCrisis.info beside it).
 amiga/sdl2compat.h maps the SDL 2 calls the game makes onto SDL 1.2 and
