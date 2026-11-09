@@ -48,7 +48,7 @@ SOUND   = $(wildcard CandyCrisisResources/snd_*.wav) \
           $(wildcard CandyCrisisResources/mod_*.mod) \
           $(wildcard CandyCrisisResources/mod_*.s3m)
 ICONS   = amiga/icons/CandyCrisis-drawer.info amiga/icons/CandyCrisis.info \
-          amiga/icons/CandyCrisisResources.info amiga/icons/ReadMe.info \
+          amiga/icons/ReadMe.info \
           amiga/icons/LICENSE.info
 
 all: $(OUT)/CandyCrisis
@@ -60,7 +60,7 @@ $(OUT)/CandyCrisis: $(OBJS) $(GFX) $(SOUND) $(ICONS) AMIGA_PORT.md | $(OUT)
 	cp $(GFX) $(SOUND) $(RES)/
 	cp AMIGA_PORT.md $(OUT)/ReadMe
 	cp LICENSE.txt $(OUT)/LICENSE
-	cp amiga/icons/CandyCrisis.info amiga/icons/CandyCrisisResources.info \
+	cp amiga/icons/CandyCrisis.info \
 	   amiga/icons/ReadMe.info amiga/icons/LICENSE.info $(OUT)/
 	cp amiga/icons/CandyCrisis-drawer.info $(BUILD)/CandyCrisis.info
 
